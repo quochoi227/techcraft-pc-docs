@@ -52,8 +52,8 @@
 
 Dự án được tổ chức thành **2 repo riêng biệt**:
 
-| Repo | Mô tả |
-|------|-------|
+| Repo                | Mô tả |
+|---------------------|-------|
 | `techcraft-frontend` | Frontend — React + Vite (TypeScript) |
 | `techcraft-backend` | Backend — Java + Spring Boot |
 
@@ -101,7 +101,7 @@ Dự án được tổ chức thành **2 repo riêng biệt**:
 
 - **JWT** (stateless cho Access Token)
 - Access Token: thời gian sống ngắn (15–60 phút), không lưu DB
-- Refresh Token: thời gian sống dài (7–30 ngày), lưu HttpOnly cookie **và lưu vào bảng `refresh_tokens` trong DB** để hỗ trợ thu hồi (revoke) chủ động khi logout hoặc phát hiện bất thường
+- Refresh Token: thời gian sống dài (7–30 ngày), lưu HttpOnly cookie**và lưu vào bảng `refresh_tokens` trong DB** để hỗ trợ thu hồi (revoke) chủ động khi logout hoặc phát hiện bất thường
 
 ---
 
@@ -127,9 +127,9 @@ users (
 refresh_tokens (
   id UUID PRIMARY KEY,
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  token VARCHAR NOT NULL UNIQUE,   -- Giá trị token (thường là UUID / JWT ID)
-  expires_at TIMESTAMP NOT NULL,   -- Thời điểm hết hạn (7–30 ngày)
-  revoked BOOLEAN DEFAULT FALSE,   -- TRUE khi bị thu hồi chủ động (logout)
+  token VARCHAR NOT NULL UNIQUE,
+  expires_at TIMESTAMP NOT NULL,
+  revoked BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP
 )
 
@@ -156,7 +156,7 @@ product_images (
   display_order INT DEFAULT 0,         -- Thứ tự hiển thị trong gallery
   created_at TIMESTAMP,
   CONSTRAINT one_primary_per_product   -- Mỗi sản phẩm chỉ có 1 ảnh đại diện
-    UNIQUE (product_id, is_primary) WHERE (is_primary = TRUE)
+  UNIQUE (product_id, is_primary) WHERE (is_primary = TRUE)
 )
 
 -- Đơn hàng
@@ -461,15 +461,14 @@ Gemini trả về: Giải thích + gợi ý 1–3 PC Case phù hợp nhất
 | PUT | `/api/products/{id}` | Cập nhật sản phẩm | Admin |
 | DELETE | `/api/products/{id}` | Xoá sản phẩm (soft delete) | Admin |
 
-### Orders
+### Images / Cloudinary
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| GET | `/api/orders` | Lịch sử đơn hàng của user hiện tại | User |
-| GET | `/api/orders/{id}` | Chi tiết đơn hàng | User |
-| POST | `/api/orders` | Tạo đơn hàng mới | User |
-| PUT | `/api/orders/{id}/cancel` | Huỷ đơn hàng | User |
-| GET | `/api/admin/orders` | Tất cả đơn hàng | Admin |
-| PUT | `/api/admin/orders/{id}/status` | Cập nhật trạng thái đơn hàng | Admin |
+| POST | `/api/images/upload` | Upload 1 hình ảnh lên Cloudinary (`multipart/form-data`, hỗ trợ param `folder`) | Admin |
+| POST | `/api/images/upload-multiple` | Upload danh sách nhiều hình ảnh (tối đa 10 ảnh/lần) | Admin |
+| DELETE | `/api/images?publicId={publicId}` | Xoá hình ảnh khỏi Cloudinary qua query param | Admin |
+| DELETE | `/api/images/{publicId}` | Xoá hình ảnh khỏi Cloudinary qua path param | Admin |
+*(Hỗ trợ cả 2 tiền tố `/api/images` và `/api/admin/images`)*
 
 ### Cart
 | Method | Endpoint | Mô tả | Auth |
