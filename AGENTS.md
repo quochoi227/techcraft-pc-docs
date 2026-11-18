@@ -119,6 +119,8 @@ users (
   phone VARCHAR,
   address TEXT,
   role ENUM('GUEST', 'USER', 'ADMIN') DEFAULT 'USER',
+  email_verified BOOLEAN DEFAULT FALSE,
+  active BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 )
@@ -227,6 +229,37 @@ email_verification_tokens (
   expires_at TIMESTAMP NOT NULL,   -- Thường 24 giờ
   used BOOLEAN DEFAULT FALSE,      -- Đánh dấu đã dùng để tránh dùng lại
   created_at TIMESTAMP
+)
+
+-- Mã giảm giá (Voucher)
+vouchers (
+  id UUID PRIMARY KEY,
+  code VARCHAR(50) UNIQUE NOT NULL,    -- Mã voucher, in hoa (vd: TECH50K)
+  name VARCHAR(255) NOT NULL,          -- Tên chương trình
+  description TEXT,                    -- Mô tả điều kiện
+  discount_type VARCHAR(20) NOT NULL,  -- PERCENTAGE hoặc FIXED_AMOUNT
+  discount_value DECIMAL(15, 2) NOT NULL, -- Giá trị giảm (% hoặc VND)
+  max_discount_amount DECIMAL(15, 2),  -- Số tiền giảm tối đa (khi discount_type = PERCENTAGE)
+  min_order_amount DECIMAL(15, 2) DEFAULT 0, -- Giá trị đơn hàng tối thiểu
+  start_date TIMESTAMP NOT NULL,       -- Thời gian bắt đầu
+  end_date TIMESTAMP NOT NULL,         -- Thời gian hết hạn
+  usage_limit INT,                     -- Tổng số lượt dùng tối đa toàn hệ thống
+  used_count INT NOT NULL DEFAULT 0,   -- Số lượt đã dùng
+  user_usage_limit INT DEFAULT 1,      -- Số lượt dùng tối đa / 1 khách hàng
+  is_active BOOLEAN DEFAULT TRUE,      -- Trạng thái kích hoạt
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP
+)
+
+-- Lịch sử sử dụng mã giảm giá
+voucher_usages (
+  id UUID PRIMARY KEY,
+  voucher_id UUID REFERENCES vouchers(id),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  order_id UUID REFERENCES orders(id) ON DELETE CASCADE,
+  discount_amount DECIMAL(15, 2) NOT NULL,
+  used_at TIMESTAMP NOT NULL,
+  UNIQUE(user_id, voucher_id, order_id)
 )
 
 -- Token đặt lại mật khẩu (gửi qua Resend khi quên mật khẩu)
@@ -526,6 +559,20 @@ Gemini trả về: Giải thích + gợi ý 1–3 PC Case phù hợp nhất
 | PUT | `/api/pc-cases/{id}/reviews/{reviewId}` | Cập nhật đánh giá PC Case của mình | User |
 | DELETE | `/api/pc-cases/{id}/reviews/{reviewId}` | Xoá đánh giá PC Case của mình | User |
 
+### Vouchers (Mã giảm giá)
+| Method | Endpoint | Mô tả | Auth |
+|--------|----------|-------|------|
+| GET | /api/vouchers | Danh sách voucher công khai đang có hiệu lực | Public |
+| GET | /api/vouchers/available | Danh sách các voucher khả dụng hiện tại | Public |
+| GET | /api/vouchers/{code} | Chi tiết voucher theo mã code | Public |
+| POST | /api/vouchers/validate | Kiểm tra tính hợp lệ và tính trước mức giảm giá | Public / User |
+| POST | /api/admin/vouchers | Tạo mã voucher mới | Admin |
+| GET | /api/admin/vouchers | Danh sách tất cả voucher (lọc, tìm kiếm, phân trang) | Admin |
+| GET | /api/admin/vouchers/{id} | Chi tiết voucher kèm thống kê sử dụng | Admin |
+| PUT | /api/admin/vouchers/{id} | Cập nhật thông tin voucher | Admin |
+| DELETE | /api/admin/vouchers/{id} | Xóa hoặc vô hiệu hóa voucher | Admin |
+| PATCH | /api/admin/vouchers/{id}/status | Bật / tắt nhanh trạng thái hoạt động | Admin |
+
 ### Statistics (Admin)
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
@@ -688,8 +735,8 @@ jwt.refresh-token-expiry-days: 30
 
 # Google Gemini
 gemini.api-key: <api-key>
-gemini.embedding-model: text-embedding-004
-gemini.chat-model: gemini-1.5-flash
+gemini.embedding-model: gemini-embedding-2
+gemini.chat-model: gemini-3.5-flash-lite
 
 # Cloudinary (hoặc AWS S3)
 cloudinary.cloud-name: <cloud-name>
@@ -697,7 +744,7 @@ cloudinary.api-key: <api-key>
 cloudinary.api-secret: <api-secret>
 
 # pgvector
-pgvector.embedding-dimension: 768
+pgvector.embedding-dimension: 3072
 pgvector.top-k: 5
 
 # Resend (Email Service)
