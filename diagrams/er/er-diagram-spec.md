@@ -19,6 +19,8 @@ Tài liệu này đặc tả chi tiết cấu trúc các bảng dữ liệu tron
 12. [refresh_tokens](#12-bảng-refresh_tokens-token-làm-mới-phiên-đăng-nhập)
 13. [email_verification_tokens](#13-bảng-email_verification_tokens-token-xác-thực-email)
 14. [password_reset_tokens](#14-bảng-password_reset_tokens-token-đặt-lại-mật-khẩu)
+15. [vouchers](#15-bảng-vouchers-mã-giảm-giá)
+16. [voucher_usages](#16-bảng-voucher_usages-lịch-sử-sử-dụng-mã-giảm-giá)
 
 ---
 
@@ -256,3 +258,45 @@ Bảng lưu trữ mã token tạm thời gửi qua email Resend khi người dù
 | expires_at | TIMESTAMP | | | X | | Thời hạn hết hạn của token (mặc định 1 giờ) |
 | used | BOOLEAN | | | X | | Đánh dấu token đã được sử dụng hay chưa (mặc định FALSE) |
 | created_at | TIMESTAMP | | | X | | Thời điểm tạo và gửi token |
+
+---
+
+## 15. Bảng `vouchers` (Mã giảm giá)
+
+Bảng lưu trữ thông tin các mã giảm giá (voucher) do Admin tạo và quản lý để áp dụng cho đơn hàng.
+
+| Tên thuộc tính | Kiểu dữ liệu | Khóa chính | Khóa ngoại | Không rỗng | Bảng tham chiếu | Diễn giải |
+|---|---|:---:|:---:|:---:|---|---|
+| id | UUID | X | | X | | Khóa chính, mã định danh duy nhất của voucher |
+| code | VARCHAR(50) | | | X | | Mã voucher viết hoa, duy nhất (Unique, ví dụ: `TECH50K`) |
+| name | VARCHAR(255) | | | X | | Tên chương trình khuyến mãi |
+| description | TEXT | | | | | Mô tả chi tiết điều kiện áp dụng voucher |
+| discount_type | VARCHAR(20) | | | X | | Loại giảm giá (`PERCENTAGE` hoặc `FIXED_AMOUNT`) |
+| discount_value | DECIMAL(15, 2) | | | X | | Giá trị giảm (% hoặc số tiền VNĐ tùy theo `discount_type`) |
+| max_discount_amount | DECIMAL(15, 2) | | | | | Số tiền giảm tối đa (áp dụng khi `discount_type = PERCENTAGE`) |
+| min_order_amount | DECIMAL(15, 2) | | | | | Giá trị đơn hàng tối thiểu để áp dụng voucher (mặc định 0) |
+| start_date | TIMESTAMP | | | X | | Thời điểm bắt đầu có hiệu lực |
+| end_date | TIMESTAMP | | | X | | Thời điểm hết hạn voucher |
+| usage_limit | INT | | | | | Tổng số lượt sử dụng tối đa trên toàn hệ thống |
+| used_count | INT | | | X | | Số lượt đã sử dụng hiện tại (mặc định 0) |
+| user_usage_limit | INT | | | | | Số lượt sử dụng tối đa trên mỗi khách hàng (mặc định 1) |
+| is_active | BOOLEAN | | | | | Trạng thái kích hoạt voucher (mặc định TRUE) |
+| created_at | TIMESTAMP | | | | | Thời điểm tạo voucher |
+| updated_at | TIMESTAMP | | | | | Thời điểm cập nhật voucher gần nhất |
+
+---
+
+## 16. Bảng `voucher_usages` (Lịch sử sử dụng mã giảm giá)
+
+Bảng lưu trữ lịch sử áp dụng mã giảm giá của khách hàng cho các đơn hàng.
+
+| Tên thuộc tính | Kiểu dữ liệu | Khóa chính | Khóa ngoại | Không rỗng | Bảng tham chiếu | Diễn giải |
+|---|---|:---:|:---:|:---:|---|---|
+| id | UUID | X | | X | | Khóa chính, mã định danh lượt sử dụng voucher |
+| voucher_id | UUID | | X | | vouchers(id) | Mã voucher đã được áp dụng |
+| user_id | UUID | | X | | users(id) | Mã người dùng sử dụng voucher (ON DELETE CASCADE) |
+| order_id | UUID | | X | | orders(id) | Mã đơn hàng áp dụng voucher (ON DELETE CASCADE) |
+| discount_amount | DECIMAL(15, 2) | | | X | | Số tiền thực tế đã được giảm cho đơn hàng (VNĐ) |
+| used_at | TIMESTAMP | | | X | | Thời điểm áp dụng mã giảm giá |
+
+- **Ràng buộc:** `UNIQUE(user_id, voucher_id, order_id)` đảm bảo mỗi cặp người dùng – voucher – đơn hàng chỉ được ghi nhận tối đa một lần.

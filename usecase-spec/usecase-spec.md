@@ -49,201 +49,82 @@
 | Luồng sự kiện phụ | Không có |
 
 <!-- Thống kê số liệu -->
-# Xem thống kê doanh thu
+# Xem thống kê
 | Use case | Nội dung |
 |--- | --- |
-| Tên use case | Xem thống kê doanh thu |
-| Mô tả | Cho phép quản trị viên xem tổng doanh thu và biểu đồ doanh thu của cửa hàng theo ngày, tháng hoặc năm |
+| Tên use case | Xem thống kê |
+| Mô tả | Cho phép quản trị viên xem tổng quan số liệu hoạt động của cửa hàng: doanh thu theo thời gian, đơn hàng theo trạng thái, top sản phẩm bán chạy và người dùng mới |
 | Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên chọn mục "Thống kê doanh thu" trên menu quản trị |
+| Điều kiện kích hoạt | Quản trị viên chọn mục "Thống kê" trên menu quản trị |
 | Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Dữ liệu và biểu đồ doanh thu được hiển thị đầy đủ trên màn hình |
-| Luồng sự kiện chính | 1. Quản trị viên truy cập mục "Thống kê doanh thu" tại trang quản trị <br> 2. Hệ thống truy vấn tổng doanh thu từ các đơn hàng thành công (`DELIVERED`) theo mốc thời gian <br> 3. Hệ thống hiển thị tổng doanh thu lũy kế và biểu đồ doanh thu theo ngày/tháng/năm <br> 4. Quản trị viên có thể chọn khoảng thời gian tùy chỉnh để xem số liệu tương ứng <br> 5. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Không có dữ liệu trong mốc thời gian**: <br> 1. Ở bước 3, nếu khoảng thời gian được chọn chưa có đơn hàng nào hoàn tất, hệ thống hiển thị doanh thu 0 VNĐ và biểu đồ trống <br> 2. Kết thúc use case |
-
-# Xem sản phẩm bán chạy
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Xem sản phẩm bán chạy |
-| Mô tả | Cho phép quản trị viên xem danh sách các sản phẩm linh kiện có số lượng bán ra cao nhất của cửa hàng |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên chọn mục "Sản phẩm bán chạy" tại trang thống kê quản trị |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Bảng xếp hạng các sản phẩm bán chạy nhất được hiển thị trên giao diện |
-| Luồng sự kiện chính | 1. Quản trị viên chọn mục "Sản phẩm bán chạy" tại trang thống kê <br> 2. Hệ thống truy vấn số lượng đã bán của các sản phẩm từ các đơn hàng đã giao thành công (`DELIVERED`) <br> 3. Hệ thống sắp xếp giảm dần và hiển thị danh sách Top sản phẩm bán chạy (hình ảnh, tên linh kiện, category, số lượng đã bán, tổng doanh thu tạo ra) <br> 4. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Chưa có dữ liệu bán hàng**: <br> 1. Ở bước 2, nếu cửa hàng chưa có đơn hàng hoàn tất nào, hệ thống thông báo "Chưa có dữ liệu sản phẩm bán ra" <br> 2. Kết thúc use case |
-
-# Xem thống kê người dùng mới
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Xem thống kê người dùng mới |
-| Mô tả | Cho phép quản trị viên theo dõi số lượng tài khoản người dùng đăng ký mới theo thời gian |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên chọn mục "Thống kê người dùng" tại trang quản trị |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Số liệu và biểu đồ tăng trưởng người dùng mới được hiển thị |
-| Luồng sự kiện chính | 1. Quản trị viên chọn mục "Thống kê người dùng" tại dashboard quản trị <br> 2. Hệ thống truy vấn số lượng tài khoản đăng ký mới trong bảng `users` theo mốc thời gian (ngày, tuần, tháng) <br> 3. Hệ thống hiển thị tổng số người dùng hiện có và biểu đồ tăng trưởng người dùng mới theo thời gian <br> 4. Kết thúc use case |
-| Luồng sự kiện phụ | Không có |
-
-# Xem thống kê đơn hàng
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Xem thống kê đơn hàng |
-| Mô tả | Cho phép quản trị viên theo dõi tổng số lượng đơn hàng và tỷ lệ phân bố theo các trạng thái xử lý |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên chọn mục "Thống kê đơn hàng" tại trang quản trị |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Biểu đồ và bảng số liệu đơn hàng theo trạng thái được hiển thị |
-| Luồng sự kiện chính | 1. Quản trị viên chọn mục "Thống kê đơn hàng" tại trang quản trị <br> 2. Hệ thống tổng hợp số lượng đơn hàng từ bảng `orders` theo từng trạng thái (`PENDING`, `CONFIRMED`, `SHIPPING`, `DELIVERED`, `CANCELLED`) <br> 3. Hệ thống hiển thị tổng số đơn hàng cùng biểu đồ tròn thể hiện tỷ lệ phần trăm của từng trạng thái <br> 4. Kết thúc use case |
-| Luồng sự kiện phụ | Không có |
+| Hậu điều kiện | Các số liệu và biểu đồ thống kê được hiển thị đầy đủ trên màn hình |
+| Luồng sự kiện chính | 1. Quản trị viên truy cập trang "Thống kê" tại giao diện quản trị <br> 2. Hệ thống truy vấn dữ liệu từ cơ sở dữ liệu theo mốc thời gian (doanh thu từ đơn hàng `DELIVERED`, số lượng đơn hàng theo trạng thái, top sản phẩm bán chạy, số người dùng đăng ký mới) <br> 3. Hệ thống hiển thị các thẻ tổng hợp số liệu và biểu đồ trực quan tương ứng <br> 4. Quản trị viên có thể lọc hoặc chọn khoảng thời gian tùy chỉnh để xem lại số liệu <br> 5. Kết thúc use case |
+| Luồng sự kiện phụ | **A1 - Không có dữ liệu trong mốc thời gian**: <br> 1. Nếu khoảng thời gian được chọn chưa phát sinh dữ liệu, hệ thống hiển thị giá trị mặc định (0) và thông báo trống trên biểu đồ <br> 2. Kết thúc use case |
 
 <!-- Quản lý sản phẩm -->
-# Thêm sản phẩm mới
+# Quản lý sản phẩm
 | Use case | Nội dung |
 |--- | --- |
-| Tên use case | Thêm sản phẩm mới |
-| Mô tả | Cho phép quản trị viên thêm một sản phẩm linh kiện máy tính mới vào kho hàng kèm thông số kỹ thuật chi tiết và hình ảnh |
+| Tên use case | Quản lý sản phẩm |
+| Mô tả | Cho phép quản trị viên xem danh sách, thêm mới, cập nhật thông tin và xóa mềm sản phẩm linh kiện máy tính |
 | Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên nhấn nút "Thêm sản phẩm" tại trang Quản lý sản phẩm |
+| Điều kiện kích hoạt | Quản trị viên chọn mục "Quản lý sản phẩm" trên menu quản trị |
 | Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Sản phẩm mới được tạo trong bảng `products` với trạng thái `is_active = true` |
-| Luồng sự kiện chính | 1. Quản trị viên nhấn nút "Thêm sản phẩm" tại trang quản lý sản phẩm <br> 2. Hệ thống hiển thị biểu mẫu thêm sản phẩm: thông tin chung (tên, giá, tồn kho, category, mô tả, ảnh) và các ô nhập thông số kỹ thuật riêng theo category (JSONB) <br> 3. Quản trị viên nhập thông tin, chọn tệp hình ảnh và nhấn nút "Lưu" <br> 4. Hệ thống tải ảnh lên dịch vụ lưu trữ (Cloudinary) lấy URL và kiểm tra tính hợp lệ của dữ liệu <br> 5. Hệ thống lưu sản phẩm mới vào cơ sở dữ liệu và hiển thị thông báo thêm thành công <br> 6. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Dữ liệu nhập không hợp lệ**: <br> 1. Ở bước 4, nếu thiếu thông tin bắt buộc hoặc giá/số lượng tồn kho âm, hệ thống thông báo lỗi yêu cầu sửa lại <br> 2. Quay lại bước 3 của luồng chính <br> **A2 - Lỗi tải ảnh lên Cloudinary**: <br> 1. Ở bước 4, nếu upload ảnh thất bại, hệ thống thông báo "Tải ảnh thất bại, vui lòng thử lại" <br> 2. Quay lại bước 3 của luồng chính |
-
-# Cập nhật sản phẩm
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Cập nhật sản phẩm |
-| Mô tả | Cho phép quản trị viên chỉnh sửa thông tin, giá bán, số lượng tồn kho hoặc thông số kỹ thuật của sản phẩm đã có |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên nhấn nút "Sửa" tại dòng sản phẩm cần chỉnh sửa |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` và sản phẩm cần sửa đang tồn tại |
-| Hậu điều kiện | Thông tin sản phẩm được cập nhật lại trong cơ sở dữ liệu |
-| Luồng sự kiện chính | 1. Quản trị viên nhấn nút "Sửa" tại sản phẩm muốn chỉnh sửa trong danh sách <br> 2. Hệ thống hiển thị biểu mẫu chứa toàn bộ thông tin hiện tại của sản phẩm <br> 3. Quản trị viên thay đổi các trường thông tin cần cập nhật (giá, tồn kho, mô tả, thông số kỹ thuật, tải ảnh mới nếu cần) và nhấn "Cập nhật" <br> 4. Hệ thống kiểm tra dữ liệu hợp lệ (upload ảnh mới nếu có) <br> 5. Hệ thống lưu các thay đổi vào bảng `products` và hiển thị thông báo cập nhật thành công <br> 6. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Dữ liệu cập nhật không hợp lệ**: <br> 1. Ở bước 4, nếu giá bán <= 0 hoặc số lượng tồn kho âm, hệ thống hiển thị cảnh báo lỗi <br> 2. Quay lại bước 3 của luồng chính |
-
-# Xóa sản phẩm
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Xóa sản phẩm |
-| Mô tả | Cho phép quản trị viên xóa mềm sản phẩm (`is_active = false`) để ngừng kinh doanh mà không làm mất tính toàn vẹn dữ liệu đơn hàng cũ |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên nhấn nút "Xóa" tại dòng sản phẩm muốn ngừng kinh doanh |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` và sản phẩm tồn tại trong hệ thống |
-| Hậu điều kiện | Trường `is_active` của sản phẩm được chuyển sang `false` |
-| Luồng sự kiện chính | 1. Quản trị viên nhấn nút "Xóa" tại sản phẩm cần ngừng kinh doanh <br> 2. Hệ thống hiển thị hộp thoại xác nhận xóa sản phẩm <br> 3. Quản trị viên chọn xác nhận xóa <br> 4. Hệ thống cập nhật `is_active = false` cho sản phẩm trong cơ sở dữ liệu <br> 5. Hệ thống hiển thị thông báo xóa thành công và cập nhật lại danh sách hiển thị <br> 6. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Quản trị viên hủy thao tác**: <br> 1. Ở bước 3, quản trị viên chọn "Hủy bỏ" trong hộp thoại xác nhận <br> 2. Hệ thống đóng hộp thoại và giữ nguyên sản phẩm <br> 3. Kết thúc use case |
+| Hậu điều kiện | Danh sách sản phẩm được hiển thị hoặc dữ liệu sản phẩm trong bảng `products` được thêm mới, cập nhật, vô hiệu hóa (`is_active = false`) |
+| Luồng sự kiện chính | 1. Quản trị viên truy cập mục "Quản lý sản phẩm", hệ thống hiển thị danh sách sản phẩm (tìm kiếm, lọc theo category, phân trang) <br> 2. **Thêm mới**: Quản trị viên nhấn "Thêm sản phẩm", nhập thông tin chung (tên, giá, tồn kho, category, mô tả), thông số kỹ thuật (JSONB) và tải ảnh lên Cloudinary, sau đó nhấn "Lưu" <br> 3. **Cập nhật**: Quản trị viên chọn "Sửa" tại một sản phẩm, chỉnh sửa thông tin/ảnh cần thiết và nhấn "Cập nhật" <br> 4. **Xóa**: Quản trị viên chọn "Xóa" tại một sản phẩm và xác nhận để hệ thống thực hiện xóa mềm (`is_active = false`) <br> 5. Hệ thống kiểm tra dữ liệu hợp lệ, lưu thay đổi vào cơ sở dữ liệu và hiển thị thông báo thành công <br> 6. Kết thúc use case |
+| Luồng sự kiện phụ | **A1 - Dữ liệu không hợp lệ hoặc lỗi tải ảnh**: <br> 1. Nếu thiếu thông tin bắt buộc, giá/tồn kho âm hoặc upload ảnh lên Cloudinary thất bại, hệ thống thông báo lỗi và yêu cầu nhập lại <br> **A2 - Quản trị viên hủy thao tác xóa**: <br> 1. Ở hộp thoại xác nhận xóa, nếu chọn "Hủy bỏ", hệ thống đóng hộp thoại và giữ nguyên sản phẩm |
 
 <!-- Quản lý đơn hàng -->
-# Xem tất cả đơn hàng
+# Quản lý đơn hàng
 | Use case | Nội dung |
 |--- | --- |
-| Tên use case | Xem tất cả đơn hàng |
-| Mô tả | Cho phép quản trị viên theo dõi toàn bộ danh sách đơn hàng của khách hàng trên hệ thống kèm bộ lọc trạng thái |
+| Tên use case | Quản lý đơn hàng |
+| Mô tả | Cho phép quản trị viên xem danh sách, xem chi tiết và cập nhật trạng thái xử lý của tất cả đơn hàng trong hệ thống |
 | Actor | Quản trị viên (Admin) |
 | Điều kiện kích hoạt | Quản trị viên chọn mục "Quản lý đơn hàng" trên menu quản trị |
 | Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Danh sách toàn bộ đơn hàng trong hệ thống được hiển thị đầy đủ |
-| Luồng sự kiện chính | 1. Quản trị viên chọn mục "Quản lý đơn hàng" <br> 2. Hệ thống truy vấn danh sách tất cả đơn hàng từ bảng `orders` (sắp xếp theo thời gian mới nhất) <br> 3. Hệ thống hiển thị danh sách đơn hàng gồm: mã đơn, tên khách hàng, ngày đặt, tổng tiền, phương thức COD, trạng thái đơn hàng và các nút hành động <br> 4. Quản trị viên có thể lọc danh sách theo từng trạng thái cụ thể (`PENDING`, `CONFIRMED`, `SHIPPING`, `DELIVERED`, `CANCELLED`) <br> 5. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Chưa có đơn hàng nào**: <br> 1. Ở bước 2, nếu hệ thống chưa có đơn hàng nào, hiển thị thông báo "Chưa có đơn hàng nào trong hệ thống" <br> 2. Kết thúc use case |
-
-# Cập nhật trạng thái đơn hàng
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Cập nhật trạng thái đơn hàng |
-| Mô tả | Cho phép quản trị viên chuyển đổi trạng thái đơn hàng theo đúng quy trình xử lý giao nhận |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên thay đổi trạng thái trong danh sách lựa chọn (dropdown) của đơn hàng |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` và đơn hàng đang tồn tại |
-| Hậu điều kiện | Trạng thái mới của đơn hàng được cập nhật vào bảng `orders` |
-| Luồng sự kiện chính | 1. Tại trang Quản lý đơn hàng, quản trị viên chọn đơn hàng cần cập nhật trạng thái <br> 2. Quản trị viên chọn trạng thái mới từ ô dropdown (chuyển sang `CONFIRMED`, `SHIPPING`, `DELIVERED`, hoặc `CANCELLED`) <br> 3. Quản trị viên nhấn nút "Lưu thay đổi" <br> 4. Hệ thống kiểm tra quy tắc chuyển trạng thái hợp lệ và cập nhật trạng thái mới cho đơn hàng trong cơ sở dữ liệu <br> 5. Nếu chuyển sang `CANCELLED`, hệ thống tự động hoàn lại số lượng tồn kho của các linh kiện trong đơn <br> 6. Hệ thống hiển thị thông báo cập nhật thành công và làm mới danh sách đơn hàng <br> 7. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Chuyển đổi trạng thái không hợp lệ**: <br> 1. Ở bước 4, nếu đơn hàng đã ở trạng thái `DELIVERED` hoặc `CANCELLED` mà quản trị viên cố tình thay đổi, hệ thống cảnh báo "Không thể thay đổi trạng thái của đơn hàng đã hoàn tất hoặc đã hủy" <br> 2. Giữ nguyên trạng thái cũ và kết thúc use case |
+| Hậu điều kiện | Danh sách đơn hàng được hiển thị hoặc trạng thái đơn hàng mới được lưu vào bảng `orders` |
+| Luồng sự kiện chính | 1. Quản trị viên chọn mục "Quản lý đơn hàng", hệ thống hiển thị toàn bộ đơn hàng (có lọc theo trạng thái `PENDING`, `CONFIRMED`, `SHIPPING`, `DELIVERED`, `CANCELLED`) <br> 2. Quản trị viên chọn một đơn hàng để xem chi tiết thông tin giao nhận và danh sách mặt hàng <br> 3. Quản trị viên chọn trạng thái mới cho đơn hàng và nhấn "Lưu thay đổi" <br> 4. Hệ thống kiểm tra quy tắc chuyển trạng thái hợp lệ, cập nhật trạng thái vào cơ sở dữ liệu (nếu chuyển sang `CANCELLED` thì tự động hoàn lại tồn kho) và thông báo thành công <br> 5. Kết thúc use case |
+| Luồng sự kiện phụ | **A1 - Chưa có đơn hàng nào**: <br> 1. Hệ thống hiển thị thông báo "Chưa có đơn hàng nào trong hệ thống" <br> **A2 - Chuyển đổi trạng thái không hợp lệ**: <br> 1. Nếu đơn hàng đã ở trạng thái `DELIVERED` hoặc `CANCELLED`, hệ thống từ chối thay đổi và hiển thị cảnh báo |
 
 <!-- Quản lý PC Case -->
-# Tạo PC Case mới
+# Quản lý PC Case
 | Use case | Nội dung |
 |--- | --- |
-| Tên use case | Tạo PC Case mới |
-| Mô tả | Cho phép quản trị viên tạo một bộ cấu hình PC hoàn chỉnh bằng cách chọn các linh kiện thành phần và được hệ thống tự động kiểm tra ràng buộc tương thích trước khi lưu |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên nhấn nút "Tạo PC Case mới" tại trang Quản lý PC Case |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Bộ PC Case mới được tạo trong bảng `pc_cases` và liên kết với các linh kiện trong `pc_case_items` |
-| Luồng sự kiện chính | 1. Quản trị viên nhấn nút "Tạo PC Case mới" tại trang quản trị <br> 2. Hệ thống hiển thị biểu mẫu tạo cấu hình gồm: tên cấu hình, mục đích sử dụng (gaming, học tập, đồ họa,...), mô tả và danh sách chọn linh kiện cho các slot (CPU, Mainboard, RAM, GPU, Storage, PSU, Case, CPU_Cooler) <br> 3. Quản trị viên chọn linh kiện cho từng slot, hệ thống tự động tính tổng giá tiền <br> 4. Quản trị viên nhấn nút "Lưu cấu hình" <br> 5. Hệ thống kích hoạt thuật toán kiểm tra các ràng buộc tương thích phần cứng (socket CPU/Mainboard, chuẩn RAM, kích thước vỏ case, công suất nguồn,...) và kiểm tra linh kiện phải còn tồn kho <br> 6. Nếu tất cả ràng buộc hợp lệ, hệ thống lưu PC Case mới vào cơ sở dữ liệu và hiển thị thông báo thành công <br> 7. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Vi phạm ràng buộc tương thích phần cứng**: <br> 1. Ở bước 5, nếu các linh kiện không tương thích hoặc có linh kiện hết hàng trong kho, hệ thống từ chối lưu và hiển thị chi tiết danh sách các lỗi vi phạm <br> 2. Quản trị viên chọn lại linh kiện phù hợp và quay lại bước 4 của luồng chính |
-
-# Xem danh sách PC Case
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Xem danh sách PC Case |
-| Mô tả | Cho phép quản trị viên xem danh sách các bộ cấu hình PC Case đã được tạo trong hệ thống |
+| Tên use case | Quản lý PC Case |
+| Mô tả | Cho phép quản trị viên xem danh sách, tạo mới, cập nhật và xóa mềm các bộ cấu hình PC Case kèm kiểm tra tương thích phần cứng tự động |
 | Actor | Quản trị viên (Admin) |
 | Điều kiện kích hoạt | Quản trị viên chọn mục "Quản lý PC Case" trên menu quản trị |
 | Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Danh sách các bộ cấu hình PC Case được hiển thị đầy đủ trên màn hình |
-| Luồng sự kiện chính | 1. Quản trị viên chọn mục "Quản lý PC Case" trên thanh điều hướng <br> 2. Hệ thống truy vấn danh sách các bộ PC Case từ cơ sở dữ liệu (`pc_cases` và `pc_case_items`) <br> 3. Hệ thống hiển thị danh sách cấu hình gồm: tên bộ máy, mục đích sử dụng, tổng giá thành, danh sách các linh kiện thành phần, trạng thái kích hoạt và các nút hành động (Sửa, Xóa) <br> 4. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Chưa có cấu hình nào**: <br> 1. Ở bước 2, nếu chưa có PC Case nào trong hệ thống, hiển thị thông báo "Chưa có cấu hình PC Case nào được tạo" kèm nút "Tạo cấu hình mới" <br> 2. Kết thúc use case |
-
-# Cập nhật PC Case
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Cập nhật PC Case |
-| Mô tả | Cho phép quản trị viên thay đổi thông tin hoặc thay thế các linh kiện trong một bộ PC Case và kiểm tra lại tương thích |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên nhấn nút "Sửa" tại dòng cấu hình PC Case cần chỉnh sửa |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` và PC Case cần sửa đang tồn tại |
-| Hậu điều kiện | Thông tin và danh sách linh kiện mới của PC Case được cập nhật lại vào cơ sở dữ liệu |
-| Luồng sự kiện chính | 1. Quản trị viên nhấn nút "Sửa" tại một bộ PC Case trong danh sách quản trị <br> 2. Hệ thống hiển thị biểu mẫu chứa toàn bộ thông tin và danh sách linh kiện hiện tại của bộ máy <br> 3. Quản trị viên chỉnh sửa thông tin (tên, mục đích, mô tả) hoặc chọn linh kiện thay thế khác <br> 4. Quản trị viên nhấn nút "Lưu thay đổi" <br> 5. Hệ thống thực hiện kiểm tra tính tương thích của bộ linh kiện mới <br> 6. Nếu tương thích hợp lệ, hệ thống cập nhật thông tin và tính lại tổng giá của PC Case trong cơ sở dữ liệu, sau đó thông báo thành công <br> 7. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Linh kiện thay thế không tương thích**: <br> 1. Ở bước 5, nếu linh kiện mới vi phạm ràng buộc kỹ thuật hoặc hết hàng, hệ thống hiển thị danh sách lỗi vi phạm và từ chối cập nhật <br> 2. Quay lại bước 3 của luồng chính |
-
-# Xóa PC Case
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Xóa PC Case |
-| Mô tả | Cho phép quản trị viên vô hiệu hóa hoặc xóa một bộ PC Case khỏi hệ thống để ngừng gợi ý cấu hình này |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên nhấn nút "Xóa" tại dòng PC Case muốn loại bỏ |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` và PC Case tồn tại trong hệ thống |
-| Hậu điều kiện | PC Case được chuyển trạng thái ngừng hoạt động (`is_active = false`) |
-| Luồng sự kiện chính | 1. Quản trị viên nhấn nút "Xóa" tại bộ PC Case không còn muốn sử dụng <br> 2. Hệ thống hiển thị hộp thoại xác nhận xóa PC Case <br> 3. Quản trị viên chọn xác nhận xóa <br> 4. Hệ thống cập nhật `is_active = false` (xóa mềm) cho bản ghi PC Case trong cơ sở dữ liệu <br> 5. Hệ thống hiển thị thông báo xóa thành công và cập nhật lại danh sách hiển thị <br> 6. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Quản trị viên hủy thao tác**: <br> 1. Ở bước 3, quản trị viên chọn "Hủy bỏ" trong hộp thoại xác nhận <br> 2. Hệ thống đóng hộp thoại và giữ nguyên trạng thái cấu hình <br> 3. Kết thúc use case |
+| Hậu điều kiện | Danh sách PC Case được hiển thị hoặc cấu hình PC Case được tạo mới, cập nhật, vô hiệu hóa (`is_active = false`) trong bảng `pc_cases` và `pc_case_items` |
+| Luồng sự kiện chính | 1. Quản trị viên truy cập mục "Quản lý PC Case", hệ thống hiển thị danh sách các cấu hình đã tạo kèm linh kiện thành phần và tổng giá <br> 2. **Tạo mới**: Quản trị viên nhấn "Tạo PC Case mới", nhập tên, mục đích sử dụng, mô tả và chọn linh kiện cho từng slot (CPU, Mainboard, RAM, GPU, Storage, PSU, Case, CPU_Cooler) <br> 3. **Cập nhật**: Quản trị viên chọn "Sửa" tại một cấu hình để chỉnh sửa thông tin hoặc thay thế linh kiện <br> 4. **Xóa**: Quản trị viên chọn "Xóa" và xác nhận để vô hiệu hóa cấu hình (`is_active = false`) <br> 5. Khi tạo mới hoặc cập nhật, hệ thống tự động chạy thuật toán kiểm tra ràng buộc tương thích phần cứng và tồn kho, tính tổng giá rồi lưu vào cơ sở dữ liệu <br> 6. Kết thúc use case |
+| Luồng sự kiện phụ | **A1 - Vi phạm ràng buộc tương thích hoặc hết hàng**: <br> 1. Nếu linh kiện không tương thích (socket, RAM, kích thước, công suất nguồn,...) hoặc hết hàng, hệ thống từ chối lưu và hiển thị danh sách lỗi vi phạm <br> **A2 - Quản trị viên hủy thao tác xóa**: <br> 1. Nếu chọn "Hủy bỏ" ở hộp thoại xác nhận, hệ thống giữ nguyên trạng thái cấu hình |
 
 <!-- Quản lý tài liệu RAG -->
-# Upload tài liệu RAG
+# Quản lý tài liệu RAG
 | Use case | Nội dung |
 |--- | --- |
-| Tên use case | Upload tài liệu RAG |
-| Mô tả | Cho phép quản trị viên tải lên các tệp tài liệu chính sách của cửa hàng (PDF, DOCX, TXT) để hệ thống tự động chia đoạn và nhúng vector vào cơ sở dữ liệu phục vụ RAG |
+| Tên use case | Quản lý tài liệu RAG |
+| Mô tả | Cho phép quản trị viên xem danh sách, upload tài liệu chính sách (PDF, DOCX, TXT) để tạo vector embedding và xóa tài liệu khỏi hệ thống tri thức RAG |
 | Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên nhấn nút "Upload tài liệu" tại trang Quản lý tài liệu RAG |
+| Điều kiện kích hoạt | Quản trị viên chọn mục "Quản lý tài liệu RAG" trên menu quản trị |
 | Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Tài liệu được lưu vào bảng `rag_documents`, các đoạn văn bản (chunks) và vector embedding được lưu vào bảng `rag_chunks` (pgvector) |
-| Luồng sự kiện chính | 1. Quản trị viên nhấn nút "Upload tài liệu" tại giao diện Quản lý RAG <br> 2. Hệ thống hiển thị hộp thoại cho phép chọn tệp tin (định dạng PDF, DOCX, TXT) và nhập tiêu đề tài liệu <br> 3. Quản trị viên chọn tệp tài liệu và nhấn nút "Tải lên" <br> 4. Hệ thống đọc nội dung tệp, chia nhỏ thành các đoạn văn bản (chunks) có độ dài phù hợp <br> 5. Hệ thống gọi Gemini Embedding API để sinh vector embedding 768 chiều cho từng chunk <br> 6. Hệ thống lưu tài liệu vào bảng `rag_documents` và các chunks kèm vector vào bảng `rag_chunks` <br> 7. Hệ thống hiển thị thông báo tải lên và xử lý tài liệu RAG thành công <br> 8. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Định dạng tệp không hợp lệ**: <br> 1. Ở bước 4, nếu tệp không phải định dạng PDF, DOCX hoặc TXT, hệ thống hiển thị thông báo lỗi và từ chối tải lên <br> 2. Kết thúc use case <br> **A2 - Lỗi gọi API Embedding**: <br> 1. Ở bước 5, nếu gặp sự cố kết nối với Gemini Embedding API, hệ thống thông báo "Không thể tạo vector nhúng, vui lòng thử lại" và hủy bỏ thao tác <br> 2. Kết thúc use case |
+| Hậu điều kiện | Danh sách tài liệu được hiển thị; tài liệu và các vector embedding tương ứng được thêm vào hoặc xóa khỏi bảng `rag_documents` và `rag_chunks` |
+| Luồng sự kiện chính | 1. Quản trị viên truy cập mục "Quản lý tài liệu RAG", hệ thống hiển thị danh sách các tài liệu chính sách đã nạp <br> 2. **Upload tài liệu**: Quản trị viên nhấn "Upload tài liệu", nhập tiêu đề, chọn tệp (PDF/DOCX/TXT) và nhấn "Tải lên". Hệ thống tách đoạn (chunks), gọi Gemini Embedding API tạo vector và lưu vào PostgreSQL (pgvector) <br> 3. **Xóa tài liệu**: Quản trị viên nhấn "Xóa" tại một tài liệu và xác nhận để hệ thống xóa bản ghi tài liệu cùng toàn bộ vector chunks liên quan <br> 4. Hệ thống hiển thị thông báo thành công và cập nhật lại danh sách <br> 5. Kết thúc use case |
+| Luồng sự kiện phụ | **A1 - Định dạng tệp không hợp lệ hoặc lỗi API Embedding**: <br> 1. Nếu tệp không thuộc định dạng PDF/DOCX/TXT hoặc gọi Gemini Embedding API thất bại, hệ thống thông báo lỗi và hủy thao tác upload <br> **A2 - Quản trị viên hủy thao tác xóa**: <br> 1. Nếu chọn "Hủy bỏ" ở hộp thoại xác nhận, hệ thống giữ nguyên tài liệu |
 
-# Xem danh sách tài liệu RAG
+<!-- Quản lý mã giảm giá -->
+# Quản lý mã giảm giá
 | Use case | Nội dung |
 |--- | --- |
-| Tên use case | Xem danh sách tài liệu RAG |
-| Mô tả | Cho phép quản trị viên xem danh mục các tài liệu chính sách đã được nạp vào cơ sở tri thức của hệ thống RAG |
+| Tên use case | Quản lý mã giảm giá |
+| Mô tả | Cho phép quản trị viên xem danh sách, tạo mới, cập nhật, bật/tắt trạng thái và xóa/vô hiệu hóa mã giảm giá (voucher) trong hệ thống |
 | Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên truy cập mục "Quản lý tài liệu RAG" trên menu quản trị |
+| Điều kiện kích hoạt | Quản trị viên chọn mục "Quản lý mã giảm giá" trên menu quản trị |
 | Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` |
-| Hậu điều kiện | Danh sách tài liệu RAG được hiển thị đầy đủ trên màn hình |
-| Luồng sự kiện chính | 1. Quản trị viên chọn mục "Quản lý tài liệu RAG" từ menu quản trị <br> 2. Hệ thống truy vấn danh sách tài liệu từ bảng `rag_documents` <br> 3. Hệ thống hiển thị bảng danh sách tài liệu gồm: tiêu đề tài liệu, tên tệp nguồn, ngày tải lên và nút thao tác xóa <br> 4. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Chưa có tài liệu nào**: <br> 1. Ở bước 2, nếu chưa có tài liệu nào trong hệ thống, hiển thị thông báo "Chưa có tài liệu chính sách nào trong hệ thống" kèm nút "Upload tài liệu" <br> 2. Kết thúc use case |
-
-# Xóa tài liệu RAG
-| Use case | Nội dung |
-|--- | --- |
-| Tên use case | Xóa tài liệu RAG |
-| Mô tả | Cho phép quản trị viên xóa một tài liệu chính sách cũ cùng toàn bộ các vector embedding liên quan khỏi hệ thống tri thức RAG |
-| Actor | Quản trị viên (Admin) |
-| Điều kiện kích hoạt | Quản trị viên nhấn nút "Xóa" tại dòng tài liệu muốn xóa trong danh sách tài liệu RAG |
-| Tiền điều kiện | Quản trị viên đã đăng nhập với vai trò `ADMIN` và tài liệu cần xóa đang tồn tại |
-| Hậu điều kiện | Bản ghi tài liệu và toàn bộ các chunks kèm vector embedding bị xóa hoàn toàn khỏi cơ sở dữ liệu |
-| Luồng sự kiện chính | 1. Quản trị viên nhấn nút "Xóa" tại dòng tài liệu chính sách muốn loại bỏ <br> 2. Hệ thống hiển thị hộp thoại cảnh báo xác nhận xóa tài liệu và toàn bộ vector tri thức liên quan <br> 3. Quản trị viên chọn xác nhận xóa <br> 4. Hệ thống xóa các bản ghi chunks tương ứng trong bảng `rag_chunks` và xóa tài liệu trong bảng `rag_documents` <br> 5. Hệ thống hiển thị thông báo xóa thành công và cập nhật lại danh sách trên giao diện <br> 6. Kết thúc use case |
-| Luồng sự kiện phụ | **A1 - Quản trị viên hủy thao tác**: <br> 1. Ở bước 3, quản trị viên chọn "Hủy bỏ" trong hộp thoại xác nhận <br> 2. Hệ thống giữ nguyên tài liệu và đóng hộp thoại <br> 3. Kết thúc use case |
+| Hậu điều kiện | Danh sách voucher được hiển thị hoặc thông tin voucher được tạo mới, cập nhật, thay đổi trạng thái, xóa khỏi bảng `vouchers` |
+| Luồng sự kiện chính | 1. Quản trị viên truy cập mục "Quản lý mã giảm giá", hệ thống hiển thị danh sách voucher (có tìm kiếm, lọc và phân trang) cùng thống kê lượt đã sử dụng <br> 2. **Tạo mới**: Quản trị viên nhấn "Thêm mã giảm giá", nhập mã code, tên chương trình, loại giảm giá (`PERCENTAGE` hoặc `FIXED_AMOUNT`), giá trị giảm, mức giảm tối đa, đơn tối thiểu, thời gian áp dụng, giới hạn lượt dùng và nhấn "Lưu" <br> 3. **Cập nhật / Bật tắt trạng thái**: Quản trị viên chọn "Sửa" để chỉnh sửa thông tin voucher hoặc chuyển đổi nhanh trạng thái kích hoạt (`is_active`) <br> 4. **Xóa**: Quản trị viên chọn "Xóa" tại một voucher và xác nhận để xóa hoặc vô hiệu hóa voucher <br> 5. Hệ thống kiểm tra tính hợp lệ của dữ liệu, lưu vào cơ sở dữ liệu và thông báo thành công <br> 6. Kết thúc use case |
+| Luồng sự kiện phụ | **A1 - Mã voucher bị trùng hoặc dữ liệu không hợp lệ**: <br> 1. Nếu mã code đã tồn tại, giá trị giảm âm hoặc ngày kết thúc nhỏ hơn ngày bắt đầu, hệ thống thông báo lỗi và yêu cầu nhập lại <br> **A2 - Quản trị viên hủy thao tác xóa**: <br> 1. Nếu chọn "Hủy bỏ" ở hộp thoại xác nhận, hệ thống giữ nguyên voucher |
 
 <!-- Giỏ hàng & Đặt hàng -->
 # Thêm vào giỏ hàng

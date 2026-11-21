@@ -55,4 +55,5 @@
 | Upload tài liệu RAG | Upload PDF/DOCX/TXT cho chatbot chính sách | `POST /api/admin/rag/documents` |
 | Xem danh sách tài liệu RAG | Liệt kê tài liệu đã upload | `GET /api/admin/rag/documents` |
 | Xóa tài liệu RAG | Xóa tài liệu khỏi hệ thống RAG | `DELETE /api/admin/rag/documents/{id}` |
+| Quản lý mã giảm giá | Tạo, xem, cập nhật, xóa/vô hiệu hóa và bật/tắt trạng thái mã giảm giá | `GET/POST/PUT/DELETE /api/admin/vouchers` |
 | Xem thống kê số liệu | Xem dashboard tổng hợp: doanh thu, đơn hàng, sản phẩm bán chạy, người dùng mới | `GET /api/admin/statistics` |

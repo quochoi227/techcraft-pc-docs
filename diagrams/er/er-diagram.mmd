@@ -185,6 +185,40 @@ erDiagram
     }
 
     %% =====================================================================
+    %% VOUCHERS
+    %% =====================================================================
+    vouchers {
+        UUID id PK
+        VARCHAR code UK
+        VARCHAR name
+        TEXT description
+        VARCHAR discount_type "PERCENTAGE | FIXED_AMOUNT"
+        DECIMAL discount_value
+        DECIMAL max_discount_amount
+        DECIMAL min_order_amount
+        TIMESTAMP start_date
+        TIMESTAMP end_date
+        INT usage_limit
+        INT used_count
+        INT user_usage_limit
+        BOOLEAN is_active
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    %% =====================================================================
+    %% VOUCHER USAGES
+    %% =====================================================================
+    voucher_usages {
+        UUID id PK
+        UUID voucher_id FK
+        UUID user_id FK
+        UUID order_id FK
+        DECIMAL discount_amount
+        TIMESTAMP used_at
+    }
+
+    %% =====================================================================
     %% RELATIONSHIPS
     %% =====================================================================
 
@@ -224,3 +258,8 @@ erDiagram
     users ||--o{ refresh_tokens : "authenticated with"
     users ||--o{ email_verification_tokens : "verifies with"
     users ||--o{ password_reset_tokens : "resets password with"
+
+    %% --- Vouchers ---
+    vouchers ||--o{ voucher_usages : "used in"
+    users ||--o{ voucher_usages : "applies"
+    orders ||--o{ voucher_usages : "discounted by"
